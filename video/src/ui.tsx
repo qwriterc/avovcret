@@ -69,7 +69,7 @@ export const Emoji: React.FC<{name: string; x: number; y: number; size: number; 
 export const OrangeLabel: React.FC<{text: string; x: number; y: number; at?: number; size?: number; w?: number}> = ({text, x, y, at = 0, size = 36, w}) => {
   const sp = useSpring(at);
   return (
-    <div style={{position: 'absolute', left: x, top: y, width: w, transform: `translate(-50%,-50%) scale(${sp})`, textAlign: 'center', padding: '10px 26px', background: 'linear-gradient(180deg,#ffa42a,#e26f00)', border: '2px solid #ffd08a', boxShadow: '0 10px 22px rgba(0,0,0,0.45)', color: '#fff', fontFamily: oswald, fontWeight: 700, fontSize: size, letterSpacing: 1.5, textTransform: 'uppercase', textShadow: '0 2px 3px rgba(0,0,0,0.5)', lineHeight: 1.05}}>{text}</div>
+    <div style={{position: 'absolute', left: x, top: y, width: w, transform: `translate(-50%,-50%) scale(${sp})`, textAlign: 'center', whiteSpace: 'nowrap', padding: '10px 26px', background: 'linear-gradient(180deg,#ffa42a,#e26f00)', border: '2px solid #ffd08a', boxShadow: '0 10px 22px rgba(0,0,0,0.45)', color: '#fff', fontFamily: oswald, fontWeight: 700, fontSize: size, letterSpacing: 1.5, textTransform: 'uppercase', textShadow: '0 2px 3px rgba(0,0,0,0.5)', lineHeight: 1.05}}>{text}</div>
   );
 };
 
@@ -88,9 +88,9 @@ export const NeonTitle: React.FC<{text: string; x: number; y: number; size?: num
   const sp = useSpring(at, {damping: 16, stiffness: 90});
   const flick = 0.92 + 0.08 * Math.sin(f * 0.9);
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) scale(${0.7 + 0.3 * sp})`, opacity: clamp01(sp) * flick, textAlign: 'center', fontFamily: oswald, fontWeight: 700}}>
+    <div style={{position: 'absolute', left: x, top: y, width: 1000, transform: `translate(-50%,-50%) scale(${0.7 + 0.3 * sp})`, opacity: clamp01(sp) * flick, textAlign: 'center', fontFamily: oswald, fontWeight: 700}}>
       <div style={{fontSize: size, lineHeight: 0.95, color: '#fff7e6', letterSpacing: 4, textTransform: 'uppercase', textShadow: `0 0 6px #fff, 0 0 14px ${color}, 0 0 30px ${color}, 0 0 60px ${color}, 0 0 100px ${color}`}}>{text}</div>
-      {sub && <div style={{fontSize: size * 0.3, marginTop: 14, color: '#fff', letterSpacing: 10, textShadow: `0 0 12px ${color}, 0 3px 8px rgba(0,0,0,0.7)`}}>{sub}</div>}
+      {sub && <div style={{fontSize: size * 0.3, marginTop: 14, color: '#fff', letterSpacing: 6, whiteSpace: 'nowrap', textShadow: `0 0 12px ${color}, 0 3px 8px rgba(0,0,0,0.7)`}}>{sub}</div>}
     </div>
   );
 };
@@ -134,7 +134,7 @@ export const PeopleGrid: React.FC<{x: number; y: number; cols: number; rows: num
 export const HandNote: React.FC<{text: string; x: number; y: number; at?: number; size?: number; rot?: number; color?: string}> = ({text, x, y, at = 0, size = 64, rot = -6, color = '#ffe14a'}) => {
   const f = useCurrentFrame();
   const t = clamp01((f - at) / 14);
-  return <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg)`, fontFamily: caveat, fontWeight: 700, fontSize: size, color, opacity: t, clipPath: `inset(0 ${(1 - t) * 100}% 0 0)`, textShadow: '0 3px 8px rgba(0,0,0,0.5)', whiteSpace: 'nowrap'}}>{text}</div>;
+  return <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg)`, fontFamily: caveat, fontWeight: 700, fontSize: size, color, opacity: t, WebkitMaskImage: t < 1 ? `linear-gradient(90deg, #000 ${t * 120 - 20}%, transparent ${t * 120}%)` : 'none', textShadow: '0 3px 8px rgba(0,0,0,0.5)', whiteSpace: 'nowrap'}}>{text}</div>;
 };
 
 export const HandEllipse: React.FC<{x: number; y: number; w: number; h: number; at?: number; color?: string; rot?: number}> = ({x, y, w, h, at = 0, color = '#ffe14a', rot = -3}) => {

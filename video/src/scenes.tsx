@@ -188,7 +188,7 @@ export const Split: React.FC = () => {
       <OrangeLabel text="Lower Basin" x={790} y={630} at={s8 + 52} size={40} />
       <div style={{...sub, position: 'absolute', left: 90, width: 400, top: 690, opacity: clamp01((f - (s8 + 60)) / 10)}}>CO · WY · UT · NM</div>
       <div style={{...sub, position: 'absolute', left: 590, width: 400, top: 690, opacity: clamp01((f - (s8 + 66)) / 10)}}>AZ · NV · CA</div>
-      <HandEllipse x={540} y={640} w={800} h={150} at={s9 + 10} />
+      <HandEllipse x={540} y={665} w={900} h={210} at={s9 + 10} />
       <HandNote text="the 1922 deal" x={320} y={860} at={s9 + 18} size={72} rot={-6} />
       <Connector pts={[[540, 560], [540, 960], [540, 1010]]} at={s9 + 70} dur={20} />
       <OrangeLabel text="Mexico" x={540} y={1060} at={s9 + 84} size={44} />
@@ -209,7 +209,7 @@ export const Bars: React.FC = () => {
     {n: 'NEVADA', v: 0.3, a: s11 + 52, c: '#ff5a6a'},
   ];
   const order = [0, 1, 2, 3];
-  const xs = [-240, -80, 80, 240];
+  const xs = [-210, -70, 70, 210];
   const wob = Math.sin(f / 50) * 0.12;
   const hs = order.map((i) => data[i].v * 78 * g(f - data[i].a));
   return (
@@ -230,7 +230,7 @@ export const Bars: React.FC = () => {
         );
       })}
       <HandNote text="1 acre-foot ≈ 326,000 gallons" x={540} y={1190} at={s11 + 20} size={54} rot={-2} />
-      <Emoji name="droplet" x={150} y={560} size={110} at={10} />
+      <Emoji name="droplet" x={930} y={560} size={110} at={10} />
     </Fade>
   );
 };
@@ -328,7 +328,7 @@ export const Outro: React.FC = () => {
     <DiagWipe>
       <MapView cam={cam} overlay={(p) => <RiverLine proj={p} p={1} width={7} />} />
       <div style={{opacity: 1 - cr}}>
-        <NeonTitle text="Every drop counts" x={540} y={560} size={120} at={6} sub="FOLLOW FOR MORE MAPS" />
+        <NeonTitle text="Every drop counts" x={500} y={560} size={104} at={6} sub="FOLLOW FOR MORE MAPS" />
         <Emoji name="droplet" x={540} y={900} size={220} at={16} />
       </div>
       <AbsoluteFill style={{background: 'rgba(5,15,35,0.88)', opacity: cr}} />

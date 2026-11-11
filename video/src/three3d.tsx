@@ -91,9 +91,9 @@ const DamModel: React.FC<{appear: number; level: number}> = ({appear, level}) =>
 };
 
 export const DamCanvas: React.FC<{width: number; height: number; angle: number; appear: number; level?: number}> = ({width, height, angle, appear, level = 0.9}) => {
-  const r = 44;
+  const r = 62;
   return (
-    <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(angle) * r, 21, Math.cos(angle) * r], fov: 38, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 0.4, 3)} style={{position: 'absolute', left: 0, top: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(angle) * r, 30, Math.cos(angle) * r], fov: 38, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 1.2, 3)} style={{position: 'absolute', left: 0, top: 0}}>
       <Lights />
       <DamModel appear={Math.max(0.001, appear)} level={level} />
     </ThreeCanvas>
@@ -102,7 +102,7 @@ export const DamCanvas: React.FC<{width: number; height: number; angle: number; 
 
 /* ---------- 3D water share bars (orthographic, 1 unit = 1 px) ---------- */
 export const BAR_ROT = {x: 0.5, y: -0.42};
-export const SC = 1.45;
+export const SC = 1.12;
 export const barScreen = (x: number, y: number, z: number, wob: number) => {
   const ry = BAR_ROT.y + wob, rx = BAR_ROT.x;
   const x1 = x * Math.cos(ry) + z * Math.sin(ry), z1 = -x * Math.sin(ry) + z * Math.cos(ry);
@@ -156,7 +156,7 @@ const GaugeModel: React.FC<{level: number}> = ({level}) => {
   );
 };
 export const GaugeCanvas: React.FC<{width: number; height: number; level: number; sway: number}> = ({width, height, level, sway}) => (
-  <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(sway) * 8, 7, 46], fov: 40, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 1.6, 0)} style={{position: 'absolute', left: 0, top: 0}}>
+  <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(sway) * 8, 7, 40], fov: 40, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 1.6, 0)} style={{position: 'absolute', left: 0, top: 0}}>
     <Lights />
     <GaugeModel level={level} />
   </ThreeCanvas>
