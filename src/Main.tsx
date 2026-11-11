@@ -36,8 +36,8 @@ const Map1: React.FC<B> = (b) => {
         const pac = proj(c3, -81.6, 7.2), car = proj(c3, -80.2, 10.5);
         return (
           <>
-            <GeoLabel text="PACIFIC OCEAN" x={pac.x} y={pac.y} size={44} f={f} from={50} color="#bfe3ff" />
-            <GeoLabel text="CARIBBEAN SEA" x={car.x} y={car.y} size={44} f={f} from={40} color="#bfe3ff" />
+            <GeoLabel text="PACIFIC OCEAN" x={pac.x} y={Math.max(pac.y, 760)} size={44} f={f} from={50} color="#bfe3ff" />
+            <GeoLabel text="CARIBBEAN SEA" x={car.x} y={Math.max(car.y, 760)} size={44} f={f} from={40} color="#bfe3ff" />
             <div style={{position: 'absolute', width: 'max-content', left: 540, top: 340, transform: `translate(-50%,-50%) perspective(1300px) translateX(${(1 - tin) * -720}px) rotateY(${(1 - tin) * -75 - 4}deg) rotateZ(-3deg)`, filter: `blur(${(1 - tin) * 14}px)`}}>
               <div style={{...titleStyle, fontSize: 200, letterSpacing: 2}}>PANAMA</div>
             </div>
@@ -47,7 +47,7 @@ const Map1: React.FC<B> = (b) => {
               </div>
             )}
             <div style={{position: 'absolute', width: 'max-content', left: 540, top: 470, transform: 'translate(-50%,-50%)', opacity: fadeIn(f, 24, 14) * (1 - clamp01((f - s2) / 6)), fontFamily: sans, fontWeight: 800, fontSize: 38, letterSpacing: 8, color: '#fff', textShadow: '0 3px 10px rgba(0,0,0,.8)'}}>TWO OCEANS · ONE THIN STRIP</div>
-            {has(m, 'cutouts', 'skyline') && <Cut src={cut('skyline')} x={540} y={1010} w={940} f={f} from={36} to={s1 + 28} rot={-2} />}
+            {has(m, 'photos', 'skyline') && <Card src={photo('skyline')} x={540} y={1000} w={800} f={f} from={36} to={s1 + 28} rot={-3} />}
             {has(m, 'cutouts', 'toucan') && <Cut src={cut('toucan')} x={800} y={1000} w={420} f={f} from={s1 + 20} to={s2 - 4} rot={5} bob={14} />}
             {has(m, 'emoji', 'globe') && <Emoji name="globe" x={210} y={950} s={190} f={f} from={s1 + 34} to={s2 - 4} />}
             {has(m, 'cutouts', 'ship') && <Cut src={cut('ship')} x={540} y={1030} w={900} f={f} from={s2 + 6} to={s3} rot={-2} />}
@@ -258,7 +258,7 @@ const Map5: React.FC<B> = (b) => {
           </div>
           {has(m, 'cutouts', 'ship') && <div style={{opacity: 1 - cr}}><Cut src={cut('ship')} x={540} y={960} w={880} f={f} from={s13(0.6)} rot={-2} /></div>}
           {has(m, 'cutouts', 'toucan') && <div style={{opacity: 1 - cr}}><Cut src={cut('toucan')} x={850} y={1180} w={340} f={f} from={s13(2.6)} rot={6} bob={12} /></div>}
-          {has(m, 'cutouts', 'skyline') && <div style={{opacity: 1 - cr}}><Cut src={cut('skyline')} x={290} y={1150} w={500} f={f} from={s13(3.4)} rot={-3} /></div>}
+          {has(m, 'photos', 'skyline') && <div style={{opacity: 1 - cr}}><Card src={photo('skyline')} x={300} y={1130} w={440} f={f} from={s13(3.4)} rot={-5} /></div>}
           <div style={{position: 'absolute', inset: 0, background: 'rgba(3,12,30,.72)', opacity: cr}} />
           <div style={{position: 'absolute', left: 80, right: 130, top: 230, opacity: cr, color: '#fff', fontFamily: sans}}>
             <div style={{fontFamily: serif, fontWeight: 900, fontSize: 70, color: YEL, marginBottom: 26}}>Sources</div>

@@ -1,6 +1,7 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import {cancelRender, continueRender, delayRender} from 'remotion';
 import {ThreeCanvas} from '@remotion/three';
-import {useLoader, useThree} from '@react-three/fiber';
+import {useThree} from '@react-three/fiber';
 import * as THREE from 'three';
 import {asset, buildCam, Cam, CANAL, FOV, g2w, H, LAKE, MH, MW, W, YEL} from './lib';
 
@@ -23,14 +24,24 @@ const Rig: React.FC<{cam: Cam}> = ({cam}) => {
   return null;
 };
 
-const MapPlane: React.FC<{tint?: number}> = ({tint = 1.55}) => {
-  const tex = useLoader(THREE.TextureLoader, asset('map/panama.jpg'));
-  tex.colorSpace = THREE.SRGBColorSpace;
-  tex.anisotropy = 8;
+const MapPlane: React.FC<{tint?: number}> = ({tint = 1.0}) => {
+  const [tex, setTex] = useState<THREE.Texture | null>(null);
+  const [handle] = useState(() => delayRender('map texture'));
+  useEffect(() => {
+    new THREE.TextureLoader().load(asset('map/panama.jpg'), (t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = 8;
+      setTex(t);
+    }, undefined, (e) => cancelRender(e));
+  }, []);
+  useEffect(() => {
+    if (tex) requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(() => continueRender(handle), 50)));
+  }, [tex, handle]);
+  if (!tex) return null;
   return (
     <mesh position={[MW / 2, MH / 2, 0]}>
       <planeGeometry args={[MW, MH]} />
-      <meshBasicMaterial map={tex} color={new THREE.Color(tint * 1.0, tint * 1.04, tint * 1.08)} toneMapped={false} />
+      <meshBasicMaterial map={tex} color={new THREE.Color(tint * 1.05, tint * 1.05, tint * 1.08)} toneMapped={false} />
     </mesh>
   );
 };

@@ -4,21 +4,26 @@ from PIL import Image, ImageFilter, ImageDraw
 from transformers import AutoModelForImageSegmentation
 from torchvision import transforms
 PUB = 'public'
-KEYS = ['ship', 'skyline', 'toucan']
+KEYS = ['ship', 'toucan']
 dev = 'cuda' if torch.cuda.is_available() else 'cpu'
 model = AutoModelForImageSegmentation.from_pretrained('ZhengPeng7/BiRefNet', trust_remote_code=True).to(dev).eval()
-if dev == 'cuda': model.half()
 tf = transforms.Compose([transforms.Resize((1024, 1024)), transforms.ToTensor(), transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 ok = []; sheet = []
 for k in KEYS:
     im = Image.open(f'{PUB}/photos/{k}.jpg').convert('RGB')
     x = tf(im).unsqueeze(0).to(dev)
-    if dev == 'cuda': x = x.half()
     with torch.no_grad(): m = model(x)[-1].sigmoid().float().cpu()[0, 0].numpy()
     mask = Image.fromarray((m * 255).astype(np.uint8)).resize(im.size, Image.LANCZOS)
     a = np.asarray(mask).astype(np.float32) / 255
     # clean: remove tiny blobs by thresholding with smoothstep, then erode 1px to kill halos
     a = np.clip((a - 0.35) / 0.4, 0, 1); a = a * a * (3 - 2 * a)
+    from scipy import ndimage as ndi
+    lab, n = ndi.label(a > 0.5)
+    if n > 1:
+        sizes = ndi.sum(a > 0.5, lab, range(1, n + 1)); keep = [i + 1 for i, z in enumerate(sizes) if z >= 0.04 * sizes.max()]
+        a = a * np.isin(lab, keep)
+    filled = ndi.binary_fill_holes(a > 0.5)
+    a = np.maximum(a, (filled & (a > 0.05)).astype(np.float32) * 0 + a)
     al = Image.fromarray((a * 255).astype(np.uint8)).filter(ImageFilter.MinFilter(3)).filter(ImageFilter.GaussianBlur(1.2))
     cov = float((np.asarray(al) > 127).mean())
     print(k, 'coverage', round(cov, 3))

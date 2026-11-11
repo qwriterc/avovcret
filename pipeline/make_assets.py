@@ -20,6 +20,10 @@ def gibs():
                    f'&FORMAT=image/jpeg&STYLES=&LAYERS=BlueMarble_ShadedRelief_Bathymetry&BBOX={lon0},{lat0},{lon1},{lat1}&WIDTH=3072&HEIGHT=1920')
             r = S.get(url, timeout=180); r.raise_for_status()
             full.paste(Image.open(io.BytesIO(r.content)).convert('RGB'), (i * 3072, j * 1920))
+    from PIL import ImageEnhance
+    full = ImageEnhance.Brightness(full).enhance(1.32)
+    full = ImageEnhance.Color(full).enhance(1.28)
+    full = ImageEnhance.Contrast(full).enhance(1.12)
     full.save(out, quality=93)
 gibs()
 
