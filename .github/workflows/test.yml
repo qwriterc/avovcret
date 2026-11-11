@@ -1,0 +1,20 @@
+name: light-test
+on: {workflow_dispatch: {}}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 20}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install pillow requests
+      - run: npm ci
+        working-directory: video
+      - run: python tools/tiles.py && python tools/tts.py --fake
+        working-directory: video
+      - run: npx remotion render src/index.ts Colorado out/seq --image-sequence --every-nth-frame=45 --scale=0.4 --concurrency=2 --jpeg-quality=80 --muted
+        working-directory: video
+      - uses: actions/upload-artifact@v4
+        with: {name: frames, path: video/out/seq}

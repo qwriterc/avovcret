@@ -1,0 +1,7 @@
+[
+ {"id":"base","layer":"BlueMarble_ShadedRelief_Bathymetry","time":"2012-07-09","ext":"jpeg","matrix":"GoogleMapsCompatible_Level8","z":6,"lon0":-150,"lon1":-60,"lat0":8,"lat1":62,"ramp":null},
+ {"id":"bm7","layer":"BlueMarble_ShadedRelief_Bathymetry","time":"2012-07-09","ext":"jpeg","matrix":"GoogleMapsCompatible_Level8","z":7,"lon0":-128,"lon1":-95,"lat0":24,"lat1":50,"ramp":[5.9,6.6]},
+ {"id":"mid","layer":"Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual","time":"2000-12-01","ext":"jpeg","matrix":"GoogleMapsCompatible_Level12","z":9,"lon0":-118,"lon1":-103.5,"lat0":31,"lat1":42.5,"ramp":[7.3,8.1]},
+ {"id":"imp","layer":"Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual","time":"2000-12-01","ext":"jpeg","matrix":"GoogleMapsCompatible_Level12","z":11,"lon0":-116.3,"lon1":-114.0,"lat0":31.2,"lat1":33.6,"ramp":[9.6,10.5]},
+ {"id":"hoover","layer":"Landsat_WELD_CorrectedReflectance_TrueColor_Global_Annual","time":"2000-12-01","ext":"jpeg","matrix":"GoogleMapsCompatible_Level12","z":12,"lon0":-115.4,"lon1":-114.1,"lat0":35.4,"lat1":36.6,"ramp":[10.4,11.2]}
+]
