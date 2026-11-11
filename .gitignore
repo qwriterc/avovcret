@@ -1,0 +1,7 @@
+node_modules
+dist
+out_assets
+ref_analysis
+video/node_modules
+video/public/assets
+*.log
