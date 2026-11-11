@@ -23,14 +23,14 @@ const Rig: React.FC<{cam: Cam}> = ({cam}) => {
   return null;
 };
 
-const MapPlane: React.FC<{tint?: number}> = ({tint = 1}) => {
+const MapPlane: React.FC<{tint?: number}> = ({tint = 1.55}) => {
   const tex = useLoader(THREE.TextureLoader, asset('map/panama.jpg'));
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 8;
   return (
     <mesh position={[MW / 2, MH / 2, 0]}>
       <planeGeometry args={[MW, MH]} />
-      <meshBasicMaterial map={tex} color={new THREE.Color(tint * 1.08, tint * 1.08, tint * 1.1)} toneMapped={false} />
+      <meshBasicMaterial map={tex} color={new THREE.Color(tint * 1.0, tint * 1.04, tint * 1.08)} toneMapped={false} />
     </mesh>
   );
 };

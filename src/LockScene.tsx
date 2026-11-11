@@ -51,7 +51,7 @@ const Water: React.FC<{x: number; y0: number; y1: number; w: number}> = ({x, y0,
 };
 
 const ShipM: React.FC = () => (
-  <group scale={[0.62, 0.62, 0.62]}>
+  <group scale={[0.5, 0.5, 0.5]}>
     <mesh position={[0, 0.22, 0]}><boxGeometry args={[2.6, 0.5, 0.9]} /><meshStandardMaterial color="#1b1f2a" /></mesh>
     <mesh position={[1.5, 0.22, 0]} rotation={[0, 0, -Math.PI / 2]}><coneGeometry args={[0.45, 0.6, 4]} /><meshStandardMaterial color="#1b1f2a" /></mesh>
     {Array.from({length: 18}, (_, i) => (
@@ -77,6 +77,7 @@ const Scene: React.FC<{p: number; frame: number}> = ({p, frame}) => {
       <mesh position={[0, -1.2, -0.2]}><boxGeometry args={[19, 1.4, 2.0]} /><meshStandardMaterial color="#3b4a3a" roughness={1} /></mesh>
       {/* sea */}
       <Water x={-6.9} y0={-0.5} y1={0} w={4.4} />
+      {[1, 2].map((k) => <Concrete key={'fl' + k} x={CX[k]} y={-0.5} w={CW} h={k * STEP} />)}
       {/* chambers */}
       {[0, 1, 2].map((k) => (
         <React.Fragment key={k}>
@@ -87,7 +88,7 @@ const Scene: React.FC<{p: number; frame: number}> = ({p, frame}) => {
       <Concrete x={CX[2] + CW / 2 + 0.1} y={-0.5 + 3 * STEP - STEP * 0.0} w={0.2} h={STEP + 0.5} />
       {/* lake */}
       <Water x={7.0} y0={-0.5 + 3 * STEP} y1={3 * STEP} w={4.4} />
-      <mesh position={[7.0, 3 * STEP - 1.1, -0.2]}><boxGeometry args={[4.4, 2.4, 2.0]} /><meshStandardMaterial color="#3b4a3a" roughness={1} /></mesh>
+      <mesh position={[7.0, -0.5 + 3 * STEP - 1.2, -0.2]}><boxGeometry args={[4.4, 2.4, 2.0]} /><meshStandardMaterial color="#3b4a3a" roughness={1} /></mesh>
       {/* ship */}
       <group position={[st.x, st.y - 0.02, 0.05]}><ShipM /></group>
     </>
@@ -97,7 +98,7 @@ const Scene: React.FC<{p: number; frame: number}> = ({p, frame}) => {
 import {useThree} from '@react-three/fiber';
 const CamLook: React.FC<{a: number; zoom: number; fx: number}> = ({a, zoom, fx}) => {
   const {camera} = useThree();
-  const d = 22 / zoom;
+  const d = 26 / zoom;
   camera.position.set(fx + Math.sin(a) * d, 2.4, Math.cos(a) * d);
   camera.lookAt(fx, 1.3, 0);
   camera.updateMatrixWorld();

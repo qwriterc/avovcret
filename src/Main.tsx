@@ -38,15 +38,15 @@ const Map1: React.FC<B> = (b) => {
           <>
             <GeoLabel text="PACIFIC OCEAN" x={pac.x} y={pac.y} size={44} f={f} from={50} color="#bfe3ff" />
             <GeoLabel text="CARIBBEAN SEA" x={car.x} y={car.y} size={44} f={f} from={40} color="#bfe3ff" />
-            <div style={{position: 'absolute', left: 540, top: 340, transform: `translate(-50%,-50%) perspective(1300px) translateX(${(1 - tin) * -720}px) rotateY(${(1 - tin) * -75 - 4}deg) rotateZ(-3deg)`, filter: `blur(${(1 - tin) * 14}px)`}}>
+            <div style={{position: 'absolute', width: 'max-content', left: 540, top: 340, transform: `translate(-50%,-50%) perspective(1300px) translateX(${(1 - tin) * -720}px) rotateY(${(1 - tin) * -75 - 4}deg) rotateZ(-3deg)`, filter: `blur(${(1 - tin) * 14}px)`}}>
               <div style={{...titleStyle, fontSize: 200, letterSpacing: 2}}>PANAMA</div>
             </div>
             {f > s2 - 2 && (
-              <div style={{position: 'absolute', left: 540, top: 520, transform: `translate(-50%,-50%) rotateZ(-3deg) scale(${1 + (1 - pop(f, s2, 12)) * 2.4})`, opacity: clamp01((f - s2) / 6), filter: `blur(${(1 - clamp01((f - s2) / 10)) * 12}px)`}}>
+              <div style={{position: 'absolute', width: 'max-content', left: 540, top: 520, transform: `translate(-50%,-50%) rotateZ(-3deg) scale(${1 + (1 - pop(f, s2, 12)) * 2.4})`, opacity: clamp01((f - s2) / 6), filter: `blur(${(1 - clamp01((f - s2) / 10)) * 12}px)`}}>
                 <div style={{...titleStyle, fontSize: 176, color: YEL, letterSpacing: 4}}>CANAL</div>
               </div>
             )}
-            <div style={{position: 'absolute', left: 540, top: 470, transform: 'translate(-50%,-50%)', opacity: fadeIn(f, 24, 14) * (1 - clamp01((f - s2) / 6)), fontFamily: sans, fontWeight: 800, fontSize: 38, letterSpacing: 8, color: '#fff', textShadow: '0 3px 10px rgba(0,0,0,.8)'}}>TWO OCEANS · ONE THIN STRIP</div>
+            <div style={{position: 'absolute', width: 'max-content', left: 540, top: 470, transform: 'translate(-50%,-50%)', opacity: fadeIn(f, 24, 14) * (1 - clamp01((f - s2) / 6)), fontFamily: sans, fontWeight: 800, fontSize: 38, letterSpacing: 8, color: '#fff', textShadow: '0 3px 10px rgba(0,0,0,.8)'}}>TWO OCEANS · ONE THIN STRIP</div>
             {has(m, 'cutouts', 'skyline') && <Cut src={cut('skyline')} x={540} y={1010} w={940} f={f} from={36} to={s1 + 28} rot={-2} />}
             {has(m, 'cutouts', 'toucan') && <Cut src={cut('toucan')} x={800} y={1000} w={420} f={f} from={s1 + 20} to={s2 - 4} rot={5} bob={14} />}
             {has(m, 'emoji', 'globe') && <Emoji name="globe" x={210} y={950} s={190} f={f} from={s1 + 34} to={s2 - 4} />}
@@ -130,7 +130,7 @@ const Lock1: React.FC<B> = (b) => {
       <Blueprint frame={f} />
       <LockLayer p={p} frame={f} />
       <OrangeBox text="GATUN LOCKS" x={540} y={250} f={f} from={4} size={58} />
-      <div style={{position: 'absolute', left: 540, top: 470, transform: 'translate(-50%,-50%)', fontFamily: sans, fontWeight: 900, fontSize: 190, color: YEL, textShadow: '0 8px 0 rgba(0,0,0,.35), 0 0 26px rgba(0,0,0,.35)', opacity: fadeIn(f, 24, 10)}}>
+      <div style={{position: 'absolute', width: 'max-content', left: 540, top: 470, transform: 'translate(-50%,-50%)', fontFamily: sans, fontWeight: 900, fontSize: 190, color: YEL, textShadow: '0 8px 0 rgba(0,0,0,.35), 0 0 26px rgba(0,0,0,.35)', opacity: fadeIn(f, 24, 10)}}>
         +{meters} m
       </div>
       <Hand text="like an 8-story building" x={540} y={640} f={f} from={s6 + 40} size={78} rot={-3} />
@@ -153,7 +153,7 @@ const Map3: React.FC<B> = (b) => {
       <>
         <LakePoly opacity={ease((t - a0 - 0.2) / 1.2)} />
         <CanalPath draw={1} d={cam.d} />
-        <Ship3D u={uShip} s={cam.d * 0.03} />
+        <Ship3D u={uShip} s={cam.d * 0.016} />
       </>
     )}>
       {(cam, c3) => {
@@ -187,7 +187,7 @@ const Lock2: React.FC<B> = (b) => {
     const a = pop(f, from, 10);
     const o = (f % 24) / 24;
     return (
-      <svg width={90} height={160} viewBox="0 0 60 100" style={{position: 'absolute', left: x, top: y + o * 40, transform: `translate(-50%,-50%) scale(${a})`, opacity: 1 - o * 0.6, filter: 'drop-shadow(0 0 10px #fff)'}}>
+      <svg width={90} height={160} viewBox="0 0 60 100" style={{position: 'absolute', width: 'max-content', left: x, top: y + o * 40, transform: `translate(-50%,-50%) scale(${a})`, opacity: 1 - o * 0.6, filter: 'drop-shadow(0 0 10px #fff)'}}>
         <path d="M30 95 L6 60 L22 60 L22 5 L38 5 L38 60 L54 60 Z" fill="#fff" />
       </svg>
     );
@@ -197,8 +197,8 @@ const Lock2: React.FC<B> = (b) => {
       <Blueprint frame={f} />
       <LockLayer p={p} frame={f} zoom={1} />
       <OrangeBox text="MIRAFLORES LOCKS" x={540} y={250} f={f} from={4} size={54} />
-      <div style={{position: 'absolute', left: 540, top: 450, transform: `translate(-50%,-50%) scale(${pop(f, 14, 14)})`, fontFamily: sans, fontWeight: 900, fontSize: 140, color: '#fff', textShadow: '0 8px 0 rgba(0,0,0,.35)', whiteSpace: 'nowrap', opacity: 1 - clamp01((f - s10) / 8)}}>NO PUMPS</div>
-      <div style={{position: 'absolute', left: 540, top: 590, transform: `translate(-50%,-50%) scale(${pop(f, 34, 14)})`, fontFamily: sans, fontWeight: 900, fontSize: 110, color: YEL, textShadow: '0 8px 0 rgba(0,0,0,.35)', opacity: 1 - clamp01((f - s10) / 8)}}>GRAVITY</div>
+      <div style={{position: 'absolute', width: 'max-content', left: 540, top: 450, transform: `translate(-50%,-50%) scale(${pop(f, 14, 14)})`, fontFamily: sans, fontWeight: 900, fontSize: 140, color: '#fff', textShadow: '0 8px 0 rgba(0,0,0,.35)', whiteSpace: 'nowrap', opacity: 1 - clamp01((f - s10) / 8)}}>NO PUMPS</div>
+      <div style={{position: 'absolute', width: 'max-content', left: 540, top: 590, transform: `translate(-50%,-50%) scale(${pop(f, 34, 14)})`, fontFamily: sans, fontWeight: 900, fontSize: 110, color: YEL, textShadow: '0 8px 0 rgba(0,0,0,.35)', opacity: 1 - clamp01((f - s10) / 8)}}>GRAVITY</div>
       {down(300, 760, 40)}{down(780, 760, 46)}
       <Emoji name="droplet" x={200} y={520} s={150} f={f} from={s10 + 4} />
       <Counter f={f} from={s10 + 6} dur={70} to={200000000} suffix=" L" size={112} y={470} />
@@ -217,18 +217,18 @@ const Map4: React.FC<B> = (b) => {
     <MapBlock {...b} three={(cam) => (
       <>
         <CanalPath draw={1} d={cam.d} />
-        {Array.from({length: 7}, (_, i) => <Ship3D key={i} u={((t * 0.045 + i / 7) % 1)} s={cam.d * 0.028} seed={i} />)}
+        {Array.from({length: 7}, (_, i) => <Ship3D key={i} u={((t * 0.045 + i / 7) % 1)} s={cam.d * 0.011} seed={i} />)}
       </>
     )}>
       {() => (
         <>
           <OrangeBox text="SHIPS PER YEAR" x={540} y={250} f={f} from={s11(0.2)} to={s12(0)} size={50} />
-          <Counter f={f} from={s11(0.5)} dur={50} to={13000} suffix="+" size={190} y={400} />
-          <Emoji name="ship" x={880} y={400} s={140} f={f} from={s11(0.7)} to={s12(0)} />
+          {f < s12(0) && <Counter f={f} from={s11(0.5)} dur={50} to={13000} suffix="+" size={170} y={400} x={470} />}
+          <Emoji name="ship" x={930} y={400} s={120} f={f} from={s11(0.7)} to={s12(0)} />
           <OrangeBox text="OF WORLD SEA TRADE" x={540} y={680} f={f} from={s11(3.4)} to={s12(0)} size={46} />
           <div style={{opacity: 1 - clamp01((f - s12(0)) / 8)}}><DotGrid f={f} from={s11(3.6)} x={540} y={930} hl={f > s11(5.2) ? 5 : 0} /></div>
-          {f > s11(5.2) && f < s12(0) && <div style={{position: 'absolute', left: 540, top: 1195, transform: 'translate(-50%,-50%)', fontFamily: sans, fontWeight: 900, fontSize: 90, color: YEL, opacity: 1 - clamp01((f - s12(-0.1)) / 6), textShadow: '0 6px 0 rgba(0,0,0,.4)'}}>≈ 5%</div>}
-          <div style={{position: 'absolute', left: 540, top: 430, transform: `translate(-50%,-50%) scale(${pop(f, s12(0.3), 16)})`, fontFamily: serif, fontWeight: 900, fontSize: 330, color: '#fff', textShadow: '0 10px 26px rgba(0,0,0,.7)', display: f >= s12(0.2) ? 'block' : 'none'}}>1914</div>
+          {f > s11(5.2) && f < s12(0) && <div style={{position: 'absolute', width: 'max-content', left: 540, top: 1195, transform: 'translate(-50%,-50%)', fontFamily: sans, fontWeight: 900, fontSize: 90, color: YEL, opacity: 1 - clamp01((f - s12(-0.1)) / 6), textShadow: '0 6px 0 rgba(0,0,0,.4)'}}>≈ 5%</div>}
+          <div style={{position: 'absolute', width: 'max-content', left: 540, top: 430, transform: `translate(-50%,-50%) scale(${pop(f, s12(0.3), 16)})`, fontFamily: serif, fontWeight: 900, fontSize: 330, color: '#fff', textShadow: '0 10px 26px rgba(0,0,0,.7)', display: f >= s12(0.2) ? 'block' : 'none'}}>1914</div>
           <Hand text="Opened August 15" x={540} y={650} f={f} from={s12(0.9)} size={96} color={YEL} rot={-4} />
           {has(m, 'photos', 'sign') && <Card src={photo('sign')} x={540} y={1010} w={640} f={f} from={s12(1.4)} rot={3} />}
         </>
@@ -248,21 +248,21 @@ const Map5: React.FC<B> = (b) => {
     <MapBlock {...b} three={(cam) => (
       <>
         <CanalPath draw={1} d={cam.d} />
-        {Array.from({length: 5}, (_, i) => <Ship3D key={i} u={((t * 0.04 + i / 5) % 1)} s={cam.d * 0.03} seed={i + 2} />)}
+        {Array.from({length: 5}, (_, i) => <Ship3D key={i} u={((t * 0.04 + i / 5) % 1)} s={cam.d * 0.012} seed={i + 2} />)}
       </>
     )}>
       {() => (
         <>
-          <div style={{position: 'absolute', left: 540, top: 300, transform: `translate(-50%,-50%) scale(${pop(f, 4, 16)})`, textAlign: 'center', opacity: 1 - cr, fontFamily: serif, fontWeight: 900, fontSize: 120, color: '#fff', textShadow: '0 8px 22px rgba(0,0,0,.7)', lineHeight: 1}}>
+          <div style={{position: 'absolute', width: 'max-content', left: 540, top: 300, transform: `translate(-50%,-50%) scale(${pop(f, 4, 16)})`, textAlign: 'center', opacity: 1 - cr, fontFamily: serif, fontWeight: 900, fontSize: 120, color: '#fff', textShadow: '0 8px 22px rgba(0,0,0,.7)', lineHeight: 1}}>
             <div>CLIMBING A</div><div style={{color: YEL}}>MOUNTAIN</div><div style={{fontSize: 90}}>BY BOAT</div>
           </div>
           {has(m, 'cutouts', 'ship') && <div style={{opacity: 1 - cr}}><Cut src={cut('ship')} x={540} y={960} w={880} f={f} from={s13(0.6)} rot={-2} /></div>}
           {has(m, 'cutouts', 'toucan') && <div style={{opacity: 1 - cr}}><Cut src={cut('toucan')} x={850} y={1180} w={340} f={f} from={s13(2.6)} rot={6} bob={12} /></div>}
           {has(m, 'cutouts', 'skyline') && <div style={{opacity: 1 - cr}}><Cut src={cut('skyline')} x={290} y={1150} w={500} f={f} from={s13(3.4)} rot={-3} /></div>}
           <div style={{position: 'absolute', inset: 0, background: 'rgba(3,12,30,.72)', opacity: cr}} />
-          <div style={{position: 'absolute', left: 80, right: 130, top: 280, opacity: cr, color: '#fff', fontFamily: sans}}>
+          <div style={{position: 'absolute', left: 80, right: 130, top: 230, opacity: cr, color: '#fff', fontFamily: sans}}>
             <div style={{fontFamily: serif, fontWeight: 900, fontSize: 70, color: YEL, marginBottom: 26}}>Sources</div>
-            {m.credits.map((c, i) => <div key={i} style={{fontSize: 27, fontWeight: 600, lineHeight: 1.3, marginBottom: 10, opacity: 0.95}}>{c}</div>)}
+            {m.credits.map((c, i) => <div key={i} style={{fontSize: 36, fontWeight: 600, lineHeight: 1.28, marginBottom: 16, opacity: 0.95}}>{c}</div>)}
           </div>
         </>
       )}

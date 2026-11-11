@@ -40,7 +40,7 @@ export const Card: React.FC<{src: string; x: number; y: number; w: number; f: nu
   if (a <= 0 || ex >= 1) return null;
   const ty = (1 - a) * 1500 + ex * 1500;
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) translateY(${ty}px) rotate(${rot + (1 - a) * 10}deg)`, padding: 14, background: '#fff', boxShadow: '0 20px 40px rgba(0,0,0,.55), 0 0 40px rgba(255,255,255,.18)'}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: `translate(-50%,-50%) translateY(${ty}px) rotate(${rot + (1 - a) * 10}deg)`, padding: 14, background: '#fff', boxShadow: '0 20px 40px rgba(0,0,0,.55), 0 0 40px rgba(255,255,255,.18)'}}>
       <Img src={asset(src)} style={{width: w, display: 'block'}} />
     </div>
   );
@@ -58,7 +58,7 @@ export const Counter: React.FC<{f: number; from: number; dur: number; to: number
   const v = Math.round(to * ease((f - from) / dur));
   const sc = pop(f, from, 12);
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) scale(${sc})`, fontFamily: font, fontWeight: 900, fontSize: size, color, whiteSpace: 'nowrap', textShadow: '0 6px 0 rgba(0,0,0,.35), 0 0 26px rgba(0,0,0,.35)', letterSpacing: -1}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: `translate(-50%,-50%) scale(${sc})`, fontFamily: font, fontWeight: 900, fontSize: size, color, whiteSpace: 'nowrap', textShadow: '0 6px 0 rgba(0,0,0,.35), 0 0 26px rgba(0,0,0,.35)', letterSpacing: -1}}>
       {prefix}{v.toLocaleString('en-US')}{suffix}
     </div>
   );
@@ -68,7 +68,7 @@ export const OrangeBox: React.FC<{text: string; x: number; y: number; f: number;
   const a = pop(f, from, 12) * (1 - clamp01((f - to) / 8));
   if (a <= 0.01) return null;
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) scale(${a})`, background: `linear-gradient(#f58a1f, ${ORG})`, color: '#fff', fontFamily: sans, fontWeight: 900, fontSize: size, padding: '12px 34px', border: '3px solid #ffb04d', boxShadow: '0 10px 18px rgba(0,0,0,.45)', textShadow: '0 3px 0 rgba(0,0,0,.35)', whiteSpace: 'nowrap', letterSpacing: 1}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: `translate(-50%,-50%) scale(${a})`, background: `linear-gradient(#f58a1f, ${ORG})`, color: '#fff', fontFamily: sans, fontWeight: 900, fontSize: size, padding: '12px 34px', border: '3px solid #ffb04d', boxShadow: '0 10px 18px rgba(0,0,0,.45)', textShadow: '0 3px 0 rgba(0,0,0,.35)', whiteSpace: 'nowrap', letterSpacing: 1}}>
       {text}
     </div>
   );
@@ -79,7 +79,7 @@ export const Hand: React.FC<{text: string; x: number; y: number; f: number; from
   const ex = 1 - clamp01((f - to) / 8);
   if (a <= 0 || ex <= 0) return null;
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg)`, fontFamily: hand, fontWeight: 700, fontSize: size, color, whiteSpace: 'nowrap', clipPath: `inset(-20px ${(1 - a) * 100}% -20px 0)`, opacity: ex, textShadow: '0 4px 10px rgba(0,0,0,.6)'}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg)`, fontFamily: hand, fontWeight: 700, fontSize: size, color, whiteSpace: 'nowrap', clipPath: `inset(-20px ${(1 - a) * 100}% -20px 0)`, opacity: ex, textShadow: '0 4px 10px rgba(0,0,0,.6)'}}>
       {text}
     </div>
   );
@@ -89,7 +89,7 @@ export const GeoLabel: React.FC<{text: string; x: number; y: number; size: numbe
   const a = fadeIn(f, from, 12) * (1 - clamp01((f - to) / 10));
   if (a <= 0) return null;
   return (
-    <div style={{position: 'absolute', left: x, top: y - (1 - a) * 20, transform: 'translate(-50%,-50%)', opacity: a, fontFamily: serif, fontWeight: 700, fontSize: size, color, whiteSpace: 'nowrap', textShadow: '0 4px 12px rgba(0,0,0,.85), 0 0 3px rgba(0,0,0,.8)'}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y - (1 - a) * 20, transform: 'translate(-50%,-50%)', opacity: a, fontFamily: serif, fontWeight: 700, fontSize: size, color, whiteSpace: 'nowrap', textShadow: '0 4px 12px rgba(0,0,0,.85), 0 0 3px rgba(0,0,0,.8)'}}>
       {text}
     </div>
   );
@@ -100,7 +100,7 @@ export const Pin: React.FC<{x: number; y: number; f: number; from: number}> = ({
   if (a <= 0.01) return null;
   const pulse = ((f - from) % 40) / 40;
   return (
-    <div style={{position: 'absolute', left: x, top: y, transform: 'translate(-50%,-50%)'}}>
+    <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: 'translate(-50%,-50%)'}}>
       <div style={{position: 'absolute', left: -30, top: -30, width: 60, height: 60, borderRadius: 30, border: `4px solid ${YEL}`, opacity: 1 - pulse, transform: `scale(${0.5 + pulse})`}} />
       <div style={{position: 'absolute', left: -13, top: -13, width: 26, height: 26, borderRadius: 13, background: YEL, border: '4px solid #fff', boxShadow: '0 0 20px rgba(255,229,0,.9)', transform: `scale(${a})`}} />
     </div>
@@ -112,7 +112,7 @@ export const Arrow2D: React.FC<{x: number; y: number; f: number; from: number; r
   if (a <= 0.01) return null;
   const b = Math.sin((f - from) / 6) * 14;
   return (
-    <svg width={170} height={170} viewBox="0 0 100 100" style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg) translateY(${b}px) scale(${a})`, filter: 'drop-shadow(0 8px 8px rgba(0,0,0,.6)) drop-shadow(0 0 14px rgba(255,255,255,.6))'}}>
+    <svg width={170} height={170} viewBox="0 0 100 100" style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg) translateY(${b}px) scale(${a})`, filter: 'drop-shadow(0 8px 8px rgba(0,0,0,.6)) drop-shadow(0 0 14px rgba(255,255,255,.6))'}}>
       <path d="M50 8 L84 46 L62 46 L62 92 L38 92 L38 46 L16 46 Z" fill="#fff" />
     </svg>
   );
@@ -123,7 +123,7 @@ export const Ellipse: React.FC<{x: number; y: number; rx: number; ry: number; f:
   if (a <= 0) return null;
   const len = 2 * Math.PI * Math.max(rx, ry) * 1.06;
   return (
-    <svg width={rx * 2 + 80} height={ry * 2 + 80} style={{position: 'absolute', left: x, top: y, transform: 'translate(-50%,-50%) rotate(-5deg)', overflow: 'visible', filter: `drop-shadow(0 0 12px ${color})`}}>
+    <svg width={rx * 2 + 80} height={ry * 2 + 80} style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: 'translate(-50%,-50%) rotate(-5deg)', overflow: 'visible', filter: `drop-shadow(0 0 12px ${color})`}}>
       <ellipse cx={rx + 40} cy={ry + 40} rx={rx} ry={ry} fill="none" stroke={color} strokeWidth={9} strokeLinecap="round" strokeDasharray={len} strokeDashoffset={len * (1 - ease(a))} />
     </svg>
   );
@@ -132,7 +132,7 @@ export const Ellipse: React.FC<{x: number; y: number; rx: number; ry: number; f:
 export const QMark: React.FC<{x: number; y: number; f: number; from: number; size?: number; rot?: number}> = ({x, y, f, from, size = 170, rot = 8}) => {
   const a = pop(f, from, 14);
   if (a <= 0.01) return null;
-  return <div style={{position: 'absolute', left: x, top: y + Math.sin((f - from) / 9) * 8, transform: `translate(-50%,-50%) scale(${a}) rotate(${rot}deg)`, fontFamily: hand, fontWeight: 700, fontSize: size, color: '#fff', textShadow: '0 5px 14px rgba(0,0,0,.7)'}}>?</div>;
+  return <div style={{position: 'absolute', width: 'max-content', left: x, top: y + Math.sin((f - from) / 9) * 8, transform: `translate(-50%,-50%) scale(${a}) rotate(${rot}deg)`, fontFamily: hand, fontWeight: 700, fontSize: size, color: '#fff', textShadow: '0 5px 14px rgba(0,0,0,.7)'}}>?</div>;
 };
 
 export const Reveal: React.FC<{f: number; children: React.ReactNode; dur?: number}> = ({f, children, dur = 14}) => {
@@ -154,7 +154,7 @@ export const Reveal: React.FC<{f: number; children: React.ReactNode; dur?: numbe
 };
 
 export const DotGrid: React.FC<{f: number; from: number; x: number; y: number; hl: number}> = ({f, from, x, y, hl}) => (
-  <div style={{position: 'absolute', left: x, top: y, transform: 'translate(-50%,-50%)', display: 'grid', gridTemplateColumns: 'repeat(10, 34px)', gap: 12}}>
+  <div style={{position: 'absolute', width: 'max-content', left: x, top: y, transform: 'translate(-50%,-50%)', display: 'grid', gridTemplateColumns: 'repeat(10, 34px)', gap: 12}}>
     {Array.from({length: 100}, (_, i) => {
       const a = pop(f, from + i * 0.5, 10);
       const on = i < hl;

@@ -34,7 +34,7 @@ export type Cam = {lon: number; lat: number; d: number; p: number; y: number};
 type KF = {s: number; o: number} & Cam;
 // s = sentence index, o = seconds offset from sentence start
 export const KFS: KF[] = [
-  {s: 0, o: 0, lon: -82.3, lat: 6.3, d: 4.4, p: 66, y: 24},
+  {s: 0, o: 0, lon: -81.0, lat: 7.6, d: 3.0, p: 64, y: 22},
   {s: 1, o: 0, lon: -80.4, lat: 8.3, d: 3.1, p: 63, y: 10},
   {s: 2, o: 0, lon: -79.8, lat: 9.0, d: 2.3, p: 56, y: -6},
   {s: 3, o: 0, lon: -79.7, lat: 9.0, d: 2.0, p: 40, y: 0},
