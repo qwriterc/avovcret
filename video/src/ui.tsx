@@ -192,7 +192,7 @@ export const DiagWipe: React.FC<{frames?: number; children: React.ReactNode}> = 
 
 export const Fade: React.FC<{frames?: number; children: React.ReactNode}> = ({frames = 8, children}) => {
   const f = useCurrentFrame();
-  return <AbsoluteFill style={{opacity: clamp01(f / frames)}}>{children}</AbsoluteFill>;
+  return <AbsoluteFill style={{opacity: clamp01((f + 1) / frames)}}>{children}</AbsoluteFill>;
 };
 
 export {interpolate, FPS};

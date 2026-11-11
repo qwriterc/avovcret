@@ -31,6 +31,12 @@ def build(L, out):
     for (x, y), t in zip(jobs, res):
         if t is None: miss += 1; continue
         img.paste(t, ((x - x0) * 256, (y - y0) * 256))
+    if L["id"] not in ("base", "bm7"):
+        import numpy as np
+        a = np.asarray(img).astype(np.float32); lum = a @ np.array([0.3, 0.59, 0.11], dtype=np.float32)
+        w = np.clip((44 - lum) / 22, 0, 1)[..., None] * 0.9
+        tgt = np.stack([14 + lum * 1.6, 82 + lum * 2.4, 122 + lum * 2.2], -1)
+        img = Image.fromarray(np.clip(a * (1 - w) + tgt * w, 0, 255).astype(np.uint8))
     img.save(os.path.join(out, L["id"] + ".jpg"), quality=88)
     print(L["id"], img.size, "tiles", len(jobs), "missing", miss, flush=True)
 if __name__ == "__main__":

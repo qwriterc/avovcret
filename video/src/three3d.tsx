@@ -91,9 +91,9 @@ const DamModel: React.FC<{appear: number; level: number}> = ({appear, level}) =>
 };
 
 export const DamCanvas: React.FC<{width: number; height: number; angle: number; appear: number; level?: number}> = ({width, height, angle, appear, level = 0.9}) => {
-  const r = 17;
+  const r = 44;
   return (
-    <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(angle) * r, 8.5, Math.cos(angle) * r], fov: 38, near: 0.1, far: 100}} onCreated={({camera}) => camera.lookAt(0, 1.8, 2)} style={{position: 'absolute', left: 0, top: 0}}>
+    <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(angle) * r, 21, Math.cos(angle) * r], fov: 38, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 0.4, 3)} style={{position: 'absolute', left: 0, top: 0}}>
       <Lights />
       <DamModel appear={Math.max(0.001, appear)} level={level} />
     </ThreeCanvas>
@@ -102,15 +102,16 @@ export const DamCanvas: React.FC<{width: number; height: number; angle: number; 
 
 /* ---------- 3D water share bars (orthographic, 1 unit = 1 px) ---------- */
 export const BAR_ROT = {x: 0.5, y: -0.42};
+export const SC = 1.45;
 export const barScreen = (x: number, y: number, z: number, wob: number) => {
   const ry = BAR_ROT.y + wob, rx = BAR_ROT.x;
   const x1 = x * Math.cos(ry) + z * Math.sin(ry), z1 = -x * Math.sin(ry) + z * Math.cos(ry);
-  return {x: x1, y: y * Math.cos(rx) - z1 * Math.sin(rx)};
+  return {x: x1 * SC, y: (y * Math.cos(rx) - z1 * Math.sin(rx)) * SC};
 };
 export const BarsCanvas: React.FC<{width: number; height: number; heights: number[]; colors: string[]; xs: number[]; wob: number}> = ({width, height, heights, colors, xs, wob}) => (
   <ThreeCanvas orthographic width={width} height={height} camera={{zoom: 1, position: [0, 0, 1000], near: 1, far: 3000}} style={{position: 'absolute', left: 0, top: 0}}>
     <Lights />
-    <group rotation={[BAR_ROT.x, BAR_ROT.y + wob, 0]}>
+    <group scale={[SC, SC, SC]} rotation={[BAR_ROT.x, BAR_ROT.y + wob, 0]}>
       <mesh position={[0, -8, 0]}><boxGeometry args={[Math.max(...xs) * 2 + 260, 16, 230]} /><meshStandardMaterial color="#9fd0ff" transparent opacity={0.28} /></mesh>
       {heights.map((h, i) => {
         const g = new THREE.BoxGeometry(120, Math.max(0.01, h), 120);
@@ -155,7 +156,7 @@ const GaugeModel: React.FC<{level: number}> = ({level}) => {
   );
 };
 export const GaugeCanvas: React.FC<{width: number; height: number; level: number; sway: number}> = ({width, height, level, sway}) => (
-  <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(sway) * 3, 3.2, 17], fov: 40, near: 0.1, far: 100}} onCreated={({camera}) => camera.lookAt(0, 1.8, 0)} style={{position: 'absolute', left: 0, top: 0}}>
+  <ThreeCanvas width={width} height={height} camera={{position: [Math.sin(sway) * 8, 7, 46], fov: 40, near: 1, far: 200}} onCreated={({camera}) => camera.lookAt(0, 1.6, 0)} style={{position: 'absolute', left: 0, top: 0}}>
     <Lights />
     <GaugeModel level={level} />
   </ThreeCanvas>
@@ -180,7 +181,7 @@ const TankModel: React.FC<{level: number; spin: number}> = ({level, spin}) => {
   );
 };
 export const TankCanvas: React.FC<{width: number; height: number; level: number; spin: number}> = ({width, height, level, spin}) => (
-  <ThreeCanvas width={width} height={height} camera={{position: [0, 5.2, 15], fov: 38, near: 0.1, far: 100}} onCreated={({camera}) => camera.lookAt(0, 2.4, 0)} style={{position: 'absolute', left: 0, top: 0}}>
+  <ThreeCanvas width={width} height={height} camera={{position: [0, 8, 24], fov: 38, near: 1, far: 100}} onCreated={({camera}) => camera.lookAt(0, 2.2, 0)} style={{position: 'absolute', left: 0, top: 0}}>
     <Lights />
     <TankModel level={clamp01(level)} spin={spin} />
   </ThreeCanvas>

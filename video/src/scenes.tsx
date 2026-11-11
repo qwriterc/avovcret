@@ -3,11 +3,11 @@ import {AbsoluteFill, useCurrentFrame} from 'remotion';
 import {Billboard, MapView, Proj, RiverLine} from './Map';
 import {BAR_ROT, BarsCanvas, DamCanvas, GaugeCanvas, TankCanvas, barScreen} from './three3d';
 import {BigNum, Blueprint, Connector, Cutout, DiagWipe, Emoji, Fade, HandEllipse, HandNote, NeonTitle, OrangeLabel, PeopleGrid, PhotoCard, Pin, PlaceName, inter, oswald, playfair, useSpring} from './ui';
-import {Cam, camAt, clamp01, ease, easeOut, GEO, lerp, TimingCtx, useSent} from './lib';
+import {Cam, camAt, clamp01, ease, easeOut, GEO, lerp, TimingCtx, useLocalStart, useSent} from './lib';
 import attribution from '../public/photos/attribution.json';
 
 const C = {
-  hook0: {lon: -105.6, lat: 41.2, z: 8.3, pitch: 62, bearing: 22} as Cam,
+  hook0: {lon: -105.6, lat: 40.6, z: 8.2, pitch: 58, bearing: 22} as Cam,
   hook1: {lon: -107.6, lat: 38.7, z: 7.7, pitch: 52, bearing: 2} as Cam,
   states: {lon: -111.2, lat: 37.6, z: 6.25, pitch: 38, bearing: -6} as Cam,
   wide: {lon: -109.5, lat: 36.8, z: 5.8, pitch: 22, bearing: 0} as Cam,
@@ -48,7 +48,7 @@ export const Hook: React.FC = () => {
       </>)} />
       <NeonTitle text="Colorado River" x={540} y={330} size={128} at={4} sub="FROM SNOW TO SEA" />
       <Emoji name="snowflake" x={170} y={720} size={170} at={18} />
-      <Cutout src="cut/p39.png" x={800} y={1010} w={470} rot={4} at={26} from="right" />
+      <Cutout src="cut/p39.png" x={800} y={1120} w={500} rot={4} at={26} from="right" />
     </Fade>
   );
 };
@@ -115,8 +115,8 @@ export const Dam: React.FC = () => {
   return (
     <Fade frames={1}>
       <MapView cam={cam} overlay={(p) => <Place p={p} g={GEO.hoover} text="Hoover Dam" sub="BUILT 1936" at={6} size={54} />} />
-      <PhotoCard src="photos/p02.jpg" x={310} y={560} w={470} h={340} rot={-5} at={14} from="left" />
-      <PhotoCard src="photos/p03.jpg" x={760} y={820} w={470} h={340} rot={4} at={26} from="right" />
+      <PhotoCard src="photos/p02.jpg" x={290} y={560} w={430} h={310} rot={-5} at={14} from="left" />
+      <PhotoCard src="photos/p03.jpg" x={790} y={640} w={420} h={300} rot={4} at={26} from="right" />
       <OrangeLabel text="Hoover Dam · 1936" x={540} y={330} at={4} size={52} />
     </Fade>
   );
@@ -163,11 +163,11 @@ export const Power: React.FC = () => {
     <Fade frames={1}>
       <MapView cam={cam} overlay={(p) => <Place p={p} g={GEO.hoover} at={2} />} />
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 70%)'}} />
-      <Cutout src="cut/p04.png" x={540} y={820} w={560} rot={-2} at={4} from="bottom" glow="rgba(255,225,120,0.7)" />
-      <Cutout src="cut/p42.png" x={850} y={1090} w={330} rot={5} at={20} from="right" />
+      <Cutout src="cut/p04.png" x={520} y={780} w={520} rot={-2} at={4} from="bottom" glow="rgba(255,225,120,0.7)" />
+      <Cutout src="cut/p42.png" x={850} y={1010} w={290} rot={5} at={20} from="right" />
       <Emoji name="high_voltage" x={200} y={640} size={170} at={14} />
       <BigNum text="1M+ PEOPLE" x={540} y={330} size={120} at={8} sub="POWERED BY THE DAM" />
-      <PeopleGrid x={540} y={1110} cols={8} rows={1} size={90} at={50} perFrame={0.3} color="#ffd21f" />
+      <PeopleGrid x={540} y={1185} cols={9} rows={1} size={84} at={50} perFrame={0.3} color="#ffd21f" />
     </Fade>
   );
 };
@@ -175,22 +175,21 @@ export const Power: React.FC = () => {
 /* 9. SPLIT - blueprint org chart */
 export const Split: React.FC = () => {
   const {f} = useT();
-  const s8 = useSent(8).f, s9 = useSent(9).f;
+  const s8 = useLocalStart(8), s9 = useLocalStart(9);
   const sub: React.CSSProperties = {fontFamily: oswald, fontWeight: 600, fontSize: 36, color: '#fff', letterSpacing: 3, textAlign: 'center', textShadow: '0 2px 6px rgba(0,0,0,0.5)'};
-  const subSp1 = useSpring(Math.max(0, f - s9 + 0) * 0 + (f - s9 > 6 ? 0 : 999) * 0 + 0);
   return (
     <DiagWipe>
       <Blueprint />
       <Emoji name="droplet" x={540} y={250} size={140} at={0} />
       <OrangeLabel text="Colorado River" x={540} y={390} at={4} size={50} />
-      <Connector pts={[[540, 440], [540, 520], [290, 520], [290, 580]]} at={s8 + 32 + (f - f)} />
+      <Connector pts={[[540, 440], [540, 520], [290, 520], [290, 580]]} at={s8 + 32} />
       <Connector pts={[[540, 520], [790, 520], [790, 580]]} at={s8 + 32} />
       <OrangeLabel text="Upper Basin" x={290} y={630} at={s8 + 44} size={40} />
       <OrangeLabel text="Lower Basin" x={790} y={630} at={s8 + 52} size={40} />
       <div style={{...sub, position: 'absolute', left: 90, width: 400, top: 690, opacity: clamp01((f - (s8 + 60)) / 10)}}>CO · WY · UT · NM</div>
       <div style={{...sub, position: 'absolute', left: 590, width: 400, top: 690, opacity: clamp01((f - (s8 + 66)) / 10)}}>AZ · NV · CA</div>
       <HandEllipse x={540} y={640} w={800} h={150} at={s9 + 10} />
-      <HandNote text="the 1922 deal" x={540} y={850} at={s9 + 18} size={78} rot={-4} />
+      <HandNote text="the 1922 deal" x={320} y={860} at={s9 + 18} size={72} rot={-6} />
       <Connector pts={[[540, 560], [540, 960], [540, 1010]]} at={s9 + 70} dur={20} />
       <OrangeLabel text="Mexico" x={540} y={1060} at={s9 + 84} size={44} />
       <Emoji name="eagle" x={880} y={1100} size={120} at={s9 + 40} />
@@ -201,7 +200,7 @@ export const Split: React.FC = () => {
 /* 10. BARS - 3D water shares */
 export const Bars: React.FC = () => {
   const {f} = useT();
-  const s10 = useSent(10).f, s11 = useSent(11).f;
+  const s10 = useLocalStart(10), s11 = useLocalStart(11);
   const g = (a: number) => easeOut((a) / 26);
   const data = [
     {n: 'CALIFORNIA', v: 4.4, a: s10 + 6, c: '#ff9a1f'},
@@ -296,7 +295,7 @@ export const Rings: React.FC = () => {
       <PhotoCard src="photos/p03.jpg" x={540} y={700} w={900} h={640} rot={-2} at={4} from="bottom" label="Lake Mead" />
       <HandEllipse x={300} y={640} w={300} h={300} at={30} />
       <HandNote text="the “bathtub ring”" x={560} y={1090} at={40} size={78} rot={-4} />
-      <Cutout src="cut/p04.png" x={880} y={1010} w={250} rot={6} at={16} from="right" />
+      <Cutout src="cut/p42.png" x={930} y={1090} w={200} rot={6} at={16} from="right" />
     </Fade>
   );
 };
@@ -304,7 +303,7 @@ export const Rings: React.FC = () => {
 /* 15. DELTA */
 export const Delta: React.FC = () => {
   const {f, t} = useT();
-  const cam = camAt({lon: -114.4, lat: 33.4, z: 8.3, pitch: 40, bearing: 5}, {lon: -114.95, lat: 31.95, z: 9.9, pitch: 52, bearing: -8}, t);
+  const cam = camAt({lon: -114.4, lat: 33.4, z: 8.3, pitch: 40, bearing: 5}, {lon: -114.9, lat: 32.0, z: 9.3, pitch: 50, bearing: -8}, t);
   const fade = 1 - clamp01((cam.z - 9) / 0.8);
   return (
     <DiagWipe>
@@ -322,8 +321,7 @@ export const Outro: React.FC = () => {
   const {f, t, dur} = useT();
   const s17 = useSent(17);
   const cam = camAt({lon: -114.95, lat: 31.95, z: 8.3, pitch: 45, bearing: -8}, {...C.wide, z: 5.9, pitch: 26}, ease(f / 80));
-  const credits = clamp01((f - (s17.end - s17.start + (s17.start - 0) - (s17.start - 0) + 0) - 0) / 14);
-  const cr = clamp01((useSent(17).f - (s17.dur + 10)) / 14);
+  const cr = clamp01((s17.f - (s17.dur + 10)) / 14);
   const used = ['p04', 'p42', 'p39', 'p02', 'p03', 'p25', 'p26', 'p36', 'p33'];
   const rows = (attribution as {id: string; title: string; lic: string; author: string}[]).filter((a) => used.includes(a.id) && /CC BY/i.test(a.lic));
   return (

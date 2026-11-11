@@ -14,7 +14,7 @@ jobs:
         working-directory: video
       - run: python tools/tiles.py && python tools/tts.py --fake
         working-directory: video
-      - run: npx remotion render src/index.ts Colorado out/seq --image-sequence --every-nth-frame=45 --scale=0.4 --concurrency=2 --jpeg-quality=80 --muted
+      - run: npx remotion render src/index.ts Colorado out/seq --image-sequence --every-nth-frame=40 --scale=0.4 --concurrency=2 --jpeg-quality=80 --muted
         working-directory: video
       - run: ls -R out | head -20; find . -name 'element-*' -not -path './node_modules/*' | head -5
         working-directory: video

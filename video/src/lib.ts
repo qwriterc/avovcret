@@ -11,6 +11,8 @@ export const useSent = (i: number) => {
   const s = c.sents[Math.min(i, c.sents.length - 1)] ?? {start: 0, end: 90, text: ''};
   return {f: a - s.start, dur: s.end - s.start, start: s.start, end: s.end};
 };
+/** local (scene-relative) frame at which sentence i starts */
+export const useLocalStart = (i: number) => { const c = useContext(TimingCtx); return (c.sents[i]?.start ?? 0) - c.abs0; };
 export const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
 export const ease = (t: number) => { t = clamp01(t); return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; };
