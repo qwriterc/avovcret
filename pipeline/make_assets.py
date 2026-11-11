@@ -1,5 +1,5 @@
 """Fetch NASA GIBS imagery, licensed Wikimedia Commons photos and Fluent emoji. Writes public/ + manifest.json"""
-import os, io, re, json, html, requests
+import os, io, re, json, html, time, requests
 from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 S = requests.Session(); S.headers['User-Agent'] = 'PanamaExplainerBot/1.0 (educational video)'
@@ -42,9 +42,21 @@ for key, title in PHOTOS.items():
     lic = m.get('LicenseShortName', {}).get('value', ''); l = lic.lower()
     ok = (('cc by' in l and 'sa' not in l) or 'cc0' in l or 'public domain' in l or l.startswith('pd'))
     assert ok, (title, lic)
-    img = Image.open(io.BytesIO(S.get(ii['thumburl'], timeout=120).content)).convert('RGB')
+    img = None
+    for attempt in range(8):
+        for u in (ii['thumburl'], ii['url']):
+            try:
+                rr = S.get(u, timeout=120)
+                if rr.status_code == 200:
+                    img = Image.open(io.BytesIO(rr.content)).convert('RGB'); break
+                print('retry', key, rr.status_code); time.sleep(float(rr.headers.get('Retry-After', 8)) + 2)
+            except Exception as e: print('retry', key, repr(e)[:80])
+        if img: break
+        time.sleep(10 * (attempt + 1))
+    assert img is not None, key
+    if img.width > 2400: img = img.resize((2400, int(img.height * 2400 / img.width)), Image.LANCZOS)
     img.save(f'{PUB}/photos/{key}.jpg', quality=93)
-    photos.append(key)
+    photos.append(key); time.sleep(3)
     if key in CREDIT_KEYS:
         name = title[5:].rsplit('.', 1)[0]
         name = name if len(name) < 44 else name[:41] + '...'
