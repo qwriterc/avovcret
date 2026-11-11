@@ -1,5 +1,5 @@
-name: light-test
-on: {workflow_dispatch: {}}
+name: colorado-render-test
+on: {workflow_dispatch: {}, push: {branches: [colorado-river], paths: ['video/**', '.github/workflows/colorado-render-test.yml']}}
 jobs:
   test:
     runs-on: ubuntu-latest

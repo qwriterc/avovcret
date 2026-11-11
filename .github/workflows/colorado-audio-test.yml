@@ -1,4 +1,4 @@
-name: audio-test
+name: colorado-audio-test
 on: {workflow_dispatch: {}}
 jobs:
   test:
