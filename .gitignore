@@ -1,0 +1,8 @@
+node_modules
+out
+public/map
+public/photos
+public/cutouts
+public/emoji
+public/audio
+dist

@@ -1,0 +1,18 @@
+name: light-test
+on: [workflow_dispatch, push]
+jobs:
+  stills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: pip install requests pillow numpy
+      - run: python pipeline/make_assets.py && python pipeline/fake_timings.py
+      - run: npm install --no-audit --no-fund
+      - run: npx remotion browser ensure
+      - run: node pipeline/render.mjs stills out
+      - uses: actions/upload-artifact@v4
+        with: {name: stills, path: out/*.png}
