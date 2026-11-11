@@ -1,0 +1,20 @@
+name: audio-test
+on: {workflow_dispatch: {}}
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq espeak-ng ffmpeg
+      - run: pip install torch --index-url https://download.pytorch.org/whl/cpu && pip install kokoro soundfile numpy scipy https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+      - run: python tools/tts.py && python tools/audio.py
+        working-directory: video
+      - run: |
+          ffmpeg -y -f lavfi -i color=c=black:s=320x568:r=30:d=$(python -c "import json;print(json.load(open('public/timing.json'))[-1]['end']+4.6)") -i public/mix.wav -c:v libx264 -c:a aac -shortest -pix_fmt yuv420p out_test.mp4
+          ffmpeg -i out_test.mp4 -af volumedetect -vn -f null - 2>&1 | grep -E "mean_volume|max_volume"
+          mkdir -p out && cp out_test.mp4 public/timing.json out/ && cp public/mix.wav out/
+        working-directory: video
+      - uses: actions/upload-artifact@v4
+        with: {name: audio, path: video/out}
