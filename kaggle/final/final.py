@@ -18,8 +18,13 @@ sh(f"cd {WORK} && curl -sL https://nodejs.org/dist/v20.18.0/node-v20.18.0-linux-
 os.environ["PATH"] = f"{WORK}/node-v20.18.0-linux-x64/bin:" + os.environ["PATH"]
 sh("node -v && npm -v")
 # ---- project
-tarf = glob.glob("/kaggle/input/**/project.tar.gz", recursive=True)[0]
-with tarfile.open(tarf) as t: t.extractall(WORK)
+tars = glob.glob("/kaggle/input/**/project.tar.gz", recursive=True)
+if tars:
+    with tarfile.open(tars[0]) as t: t.extractall(WORK)
+else:  # Kaggle auto-extracts archives in datasets
+    pk = glob.glob("/kaggle/input/**/video/package.json", recursive=True)
+    print("input tree:", glob.glob("/kaggle/input/*/*")[:10], pk, flush=True)
+    shutil.copytree(os.path.dirname(pk[0]), f"{WORK}/video")
 V = f"{WORK}/video"
 sh(f"cd {V} && npm ci --no-audit --no-fund")
 # ---- python 3.11 venv for Kokoro (kokoro needs <3.13)
